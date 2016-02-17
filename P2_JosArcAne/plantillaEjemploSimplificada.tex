@@ -1,0 +1,701 @@
+\input{preambuloSimple.tex}
+
+%----------------------------------------------------------------------------------------
+%	TÍTULO Y DATOS DEL ALUMNO
+%----------------------------------------------------------------------------------------
+
+
+\title{	
+\normalfont \normalsize 
+\textsc{{\bf Ingeniería de Servidores (2014-2015)} \\ Grado en Ingeniería Informática \\ Universidad de Granada} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Memoria Práctica 2 \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+\author{José Arcos Aneas} % Nombre y apellidos
+\date{\normalsize\today} % Incluye la fecha actual
+
+%----------------------------------------------------------------------------------------
+% DOCUMENTO
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle % Muestra el Título
+\newpage %inserta un salto de página
+\tableofcontents % para generar el índice de contenidos
+\listoffigures
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	Cuestiones
+%----------------------------------------------------------------------------------------
+
+\section{Liste los argumentos de yum necesarios para instalar, buscar y eliminar paquetes.}
+
+Los argumentos son "install","search", y "remove".
+A continuación muestro unos ejemplos:
+
+
+\begin{itemize}
+\item Para instalar paquetes.
+	\begin{itemize}
+		\item  yum install paquete1...[paqueteN]-- Instala de paquete1 a paqueteM. 
+		\item  yum -y install paquete1...[paquteN]-- Hace lo mismo que el anterior pero omitiendo información.
+		\item  yum update -- Actualiza el repositorio. 
+	\end{itemize}
+\item Para buscar paqutes.
+	\begin{itemize}
+		\item  yum list -- lista paqutes disponibles.
+		\item  yum search paquete -- Busca paquetes que coincidan con el nombre " paquete ", sin necesidad de que coincidan completamente.
+	\end{itemize}
+\item Para borrar paquetes:
+	\begin{itemize}
+		\item  yum remove paquete1 ... paqueteN -- Borra los paquetes desde paquete1 a paqueteM.
+	\end{itemize}
+
+\end{itemize}
+
+\cite{E1}
+%------------------------------------------------
+\section{¿Qué ha de hacer para que yum pueda tener acceso a Internet?(Pistas: archivo de configuración en /etc, proxy: stargate.ugr.es:3128).}
+
+Lo primero es destacar que, salvo que estemos usando las máquinas virtualws de los ordenadores de las aulas, este paso no es necesario, puesto que Yum se conectariía de forma automática.
+
+Ahora bien, si estamos accediendo mediante el proxy tenemos que:
+
+
+\begin{itemize}
+	\item Editar el archivo de configuracion de Yum, ubicado en /etc/yum. Para acceder debemos estar en modo super usuario. "sudo nano /etcyum/yum.conf".
+	\item Añadimos las siguientes lineas que identificaran el numero de puerto, el nombre del usuario del proxy y la contraseña. 
+	
+	\begin{itemize}
+		\item proxy = http:/stargate.ugr.es:3128
+	\end{itemize}
+	\begin{itemize}
+		\item proxy\_username = user
+		\item proxy\_password = pass
+	\end{itemize}
+	Los dos ultimos no son necesarios en el caso de la UGR.
+	
+\end{itemize}
+
+\cite{E2}
+
+\subsection{ ¿Cómo añadimos un nuevo repositorio?}
+Podemos añadir repositorios con el siguiente (es similar a la manera de hacerlo de Fedora):
+\begin{itemize}
+
+
+\item Descargar llaves:
+	\begin{itemize}
+	\item wget http://ftp.riken.jp/Linux/fedora/epel/RPM-GPG-KEY-EPEL-6
+	\end{itemize}
+\item Importar llaves:
+	\begin{itemize}
+	\item rpm --import RPM-GPG-KEY-EPEL-6
+	\end{itemize}	 
+\item Descargamos el repositorio:
+	\begin{itemize}
+	\item   wget http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-7.noarch.rpm
+	\end{itemize}
+\item instalamos el rpm:
+	\begin{itemize}
+	\item rpm -Uvh epel-release-6-7.noarch.rpm
+	\end{itemize}
+\item con Yum reposlist podemos comprobar el mismo y la cantidad de paquetes.
+\end{itemize}
+
+\cite{E3}
+%----------------------------------------------------------------------------------------
+
+\section{Indique el comando para buscar un paquete en un repositorio y el correspondiente para instalarlo}
+
+Para buscar un paqute, podemos utilizar 
+\begin{itemize}
+\item apt-cache search paquete
+\end{itemize}
+Donde paquete es la expresión buscada. Pero en general, apt-cache otorga diversas opciones de búsqueda y listado de los paquetes, sin modificar el estado del sistema. Para instalar un paquete se utilizaría el comando:
+\begin{itemize}
+\item apt-get install nombre\_paquete
+\end{itemize}
+
+Para este último será necesario el modo super usuario.
+
+\cite{E4}
+%----------------------------------------------------------------------------------------
+
+
+\section{Indiqué qué ha modificado para que apt pueda acceder a los servidores de paquetes a través del proxy.}
+De forma similar a Yum, si nesitamos ejecutar las máquinas virtuales en los ordenadores del aula, debemos configurar apt para que acceda a internet a través del proxy.
+
+\begin{itemize}
+\item Editamos el archivo /etc/apt/apt.conf
+	\begin{itemize}
+	\item sudo nano /etc/apt/apt.conf
+	\end{itemize}
+\item Añadimos las siguientes lineas.
+	\begin{itemize}
+	\item Acquire :: http::Proxy "http://user:pass@stargare.ugr.es:3128"
+	\item Acquire :: ftp::Proxy "http://user:pass@stargare.ugr.es:3128"	
+	\end{itemize}
+\end{itemize}
+
+\cite{E5}
+
+\subsection{¿Cómo añadimos un nuevo repositorio? }
+
+En el caso de la UGR, no es necesario usuario ni contraseña. Para agregar un nuevo repositorio podemos realizar el un proceso similar al que explique en el Ejercicio2, utilizando esta vez el repositorio /etc/apt/sources.list.d.
+En las versiones mas reciente de apt, se incluye el comando:
+"sudo-apt-repository ppa: nombre\_repositorio " que los agrega directamente.
+\cite{E6}
+%----------------------------------------------------------------------------------------
+
+\section{¿Qué diferencia hay entre telnet y ssh?}
+
+La principal diferencia es una  cuestión de seguridad que además es la que provocó el desuso de telnet.
+
+Telnet envia la información como texto plano (nombres de usuario, contraseña, ...), lo cual facilita mucho el obtener datos al espiar el tráfico de la red.
+
+Con ssh, se establece una conexión encriptada. En versiones más reciente incluso se implementa el uso de certifiados loque permite una conexión mucho mas segura.
+
+\cite{E7}
+%----------------------------------------------------------------------------------------
+
+
+\section{¿Para que sirve la opción -X?}
+Con la opcion -X al conectar a un servidor por ssh activaremos el forwading. Esto nos permite mostrar el máquina local el display de un programa que se ejecuta en el servidor remoto.
+
+
+\cite{E8}
+
+\subsection{Ejecute remotamente, es decir, desde la máquina anfitriona (si tiene Linux) o desde la otra máquina virtual, el comando gedit en una sesión abierta con ssh. ¿Qué ocurre? }
+
+Al ejecutar gedit me da un error al no encontrar el visor. Creo que es un problema de configuracion.
+Para intentar arreglarlo instale Xming, pero sin éxito.
+
+Según la información que he encontrado deberia salirme la interfaz grafica, dejando para la maquina virtual todo el trabajo de procesamiento.
+
+Solución: En la carpeta /home exiten tres ficheros (Xauthority, .Xautority-c y .Xauthority-l), que si los eliminamos (los tres) cuando volvemos a iniciar sesión de nuevo ya es posible ejecutar el comando y permitirme ver la GUI de este dejando el trabajo de procesamiento  para la maquina virtual.
+
+\cite{E9}
+
+%----------------------------------------------------------------------------------------
+
+\section{Muestre la secuencia de comandos y las modificaciones a los archivos correspondientes para permitir acceder a la consola remota sin introducir la contraseña. (Pistas: ssh-keygen, ssh-copy-id}
+
+El método que vamos a usar permite crear una clave RSA para poder entrar en un sitio remoto desde la la cuenta sin tener que escribir la clave.
+
+\begin{itemize}
+\item Primero tenemosque ejecutar "ssh-keygen" en la máquina local. Si no alteramos nada se crearan los archivos ~/.ssh/identity y ~/.ssh/idtentity.pub (en versiones antiguas, en las modernas se generan ~/.ssh/id\_rsa y ~/.ssh/id\_rsa.pub.
+
+\item Ahora debemos agregar (y crear si no exste) en la máquina remota el contenido de la clave pública (el .pub del paso anterior) al archivo ~/.ssh/authorized\_keys  del servidor remoto. En mi caso lo he enviado por sftp para añadirlo, y depsués lo he eliminado. A partir de ahora no nos pedirá la clave cada vez que accedamos.
+\end{itemize}
+
+
+\cite{E1}
+
+
+
+%----------------------------------------------------------------------------------------
+\section{ ¿Qué archivo es el que contiene la configuración de sshd? }
+
+El archivo de configuracion del demonio sshd está en /etc/ssh/sshd\_config.
+
+\subsection{¿Qué parámetro hay que modificar para evitar que el usuario root acceda? Cambie el puerto por defecto y compruebe que puede acceder}
+Dentro de este archivo para evitar que podamos hacer login como root tenemos que descomentar la linea "Permit Root Login" y dejarla así:
+Permite Root Login no.
+
+Para cambiar el puerto, solo tenemos que hacer eso mismo en la linea correspodiente 
+
+Port 23 ( en mi caso podria ser cualquier otro puerto que este libre).
+En cuanto al acceso con o sin password, seria activado o desactivado por la linea:
+
+Password/Authentication yes (/no)
+
+
+\cite{E11}
+
+\newpage
+%----------------------------------------------------------------------------------------
+
+
+\section{Indique si es necesario reiniciar el servicio.}
+
+Si es necesario reiniciar el servicio.
+
+\subsection{¿Cómo se reinicia un servicio en Ubuntu? Muestre la secuencia de comandos para hacerlo. }
+
+Para reiniciar un servicio en Ubuntu el comando es : sudo service  nombre\_servicio restart.
+
+
+Donde nombre\_servicio sera en nuestro caso "ssh".
+
+
+
+\subsection{ ¿y en CentOS? Muestre la secuencia de comandos para hacerlo. }
+
+Para hacer lo mismo en CentOS:
+
+/sbin/service nombre\_service  restart.
+
+Donde nombre\_servicio sera en nuestro caso "ssh".
+
+
+
+Aunque al estar basdo en debian para algunos servicios aún es válido hacer lo siguiente.
+
+El comando "service nombre\_servicio restart" funciona correctamente en CentOs.
+
+De este tema ya conocia algunas cosas pero hay mucha infomacion sobre el uso de SSH \footnote{http://web.mit.edu/rhel-doc/3/rhel-sag-es-3/s1-openssh-client-config.html}
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+
+\section{ Muestre los comandos que ha utilizado en Ubuntu Server y en CentOS (aunque en este último puede utilizar la GUI, en tal caso, realice capturas de pantalla).}
+
+\begin{itemize}
+\item Ubuntu:
+	\begin{itemize}
+	\item La opción mas sencilla es utilizar taskset:
+	sudo tasket install lamp-server
+	- A input -m state --state NEW -m top -p top 89 -j Acces
+	\end{itemize}
+	\item ya habia instalado antes un LAMP, la información necesaria para instalarlo en ubuntu podemos mirarla en \footnote{http://blog.desdelinux.net/como-instalar-lamp-en-ubuntu/}.
+\item  CentOS:
+	\begin{itemize}
+	\item yum install -y httpd mysql mysql-server php-mysql php-cli php-common
+	\item /etc/init.d/httpd start
+	\item En la siguiente página web hay información para poder instalar y probar LAMP en CentOS  \footnote{http://www.linuxparatodos.net/web/comunidad/base-de-conocimiento/-/wiki/Base+de+Conocimiento/Servidor+LAMP+en+CentOS}
+	\end{itemize}
+	
+
+
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+
+\newpage
+
+\section{ Enumere otros servidores web y las páginas de sus proyectos (mínimo 3 sin considerar Apache, IIS ni nginx).}
+
+\begin{itemize}
+\item Cherokee
+\item Tomcat
+\item Monkey
+\end{itemize}
+
+En la siguiente dirección \footnote{http://en.wikipedia.org/wiki/Comparison\_of\_web\_server\_software} se puede ver un articulo de la Wikipedia donde hay una comparación de servidores web.
+
+%----------------------------------------------------------------------------------------
+
+
+\section{¿Cómo comprueba que funciona? Muestre una captura de pantalla. (Pista: su máquina se denomina localhost}
+Para probar que funciona, una vez instaldo , abrimos el navegador de internet e introducimos "localhost" en la barra de dirección.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/pregunta12.eps}
+\caption{Comprobar que el servicio (IIS) funciona.}
+\end{center}
+
+\end{figure}
+
+
+%----------------------------------------------------------------------------------------
+
+
+\section{Muestre un ejemplo de uso del comando (p.ej. http://fedoraproject.org/wiki/VMWare)}
+
+La orden Patch está muy relacionada con Diff. En conjunto , se usan para crear y alicar archivos de parcheo. Su uso es similar a esto:
+\begin{itemize}
+\item Encontrar el fallo del archivo original.
+\item Arreglarlo e introducirlo. Después guardamos el nuevo fichero con otro nombre " corregido ". Con ellos podemos crear un parche que contendra solo las modificaciones. 
+\item Aplicamos en terminal : "dif -u original corregido > archivo\_parche.diff".
+Ahora para arreglar el archivo "original" solo será necesario aplicar el parche.
+
+\item para aplicar el parche escribirmos en terminal : " patch original -i archivo\_parche.diff -o  actualizado" , donde "actualizado" será el archivo ya arreglado.
+ 
+\end{itemize}
+
+Otros de sus usos son :
+
+\begin{itemize}
+\item Dejar el archivo tal y como estaba antes de aplicar "patch" : " patch actualizado -R -i archivo\_parche.diff "
+\item Comprobar que el parche no produce conflictos
+\end{itemize}
+
+
+Hay mucha informacion sobre estos dos comandos, ya conocia algo del funcionamiento de estas herramientas, no obstante se recomienda visitar la siguiente página \footnote{http://guimi.net/blogs/hiparco/generar-diff-y-aplicar-patch-parches/ }, donde aparecen ejemplos de su uso bastante claros.
+
+
+%----------------------------------------------------------------------------------------
+
+\section{ Realice la instalación de esta aplicación (webmin) y pruebe a modificar algún parámetro de algún servicio. Muestre las capturas de pantalla pertinentes así como el proceso de instalación. }
+
+El proceso de instalación no es demasiado complicado.
+
+Primero debemos añadir repositorios.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/pregunta15-1.eps}
+\caption{Añadir repositorio.}
+\end{center}
+\end{figure}
+
+Ahora instalamos con Yum.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/pregunta15-2.eps}
+\caption{Instalamos la aplicación con yum.}
+\end{center}
+\end{figure}
+
+Ahora debemos añadir la excepción al firewall.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/pregunta15-3.eps}
+\caption{Añadimos excepcion al firewall.}
+\end{center}
+\end{figure}
+
+Y reiniciamos el servicio.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/pregunta15-4.eps}
+\caption{Reiniciar servicio.}
+\end{center}
+\end{figure}
+
+Una vez instalado y configurado, si accedemos a nuestra IP, al puerto que hemos indicado, nos aparece funcionando.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/pregunta15-5.eps}
+\caption{Comprobación de que funciona el servicio.}
+\end{center}
+\end{figure}
+
+
+Ahora tenemos que modificar algún parámetro.
+Primero accedemos a "Webmin -- Change Language and Theme" para cambiar el idioma del sistema y ponerlo en español.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/pregunta15-6.eps}
+\caption{Cambiando el idioma del sistema.}
+\end{center}
+\end{figure}
+
+Luego, para comprobar mas del funcionamiento de este servicio, he cambiado el puerto de escucha del protocolo SSH (del puerto 22 al puerto 23), aunque es posible realizar gran variedad de cambios.
+Para esto accedemos a "Servers -- SSH Servers", y cambiamos el puerto en la casilla correspondiente.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/pregunta15-7.eps}
+\caption{Cambiando puerto de escuha SSH.}
+\end{center}
+\end{figure}
+
+
+Para realizar esta instalación consulte una página web de unos jovenes programadores, cuyo administrador es Alvaro Fontela Sanchez \footnote{http://openwebcms.es/2013/instalar-webmin-en-centos/}.
+
+%----------------------------------------------------------------------------------------
+
+\section{Instale phpMyAdmin, indique cómo lo ha realizado y muestre algunas capturas de pantalla.}
+
+La información de consulta usada pertenece a Rahul Kumar \footnote{http://tecadmin.net/how-to-install-phpmyadmin-on-centos-using-yum}.
+
+En primer lugar debemos instalar los paquetes, como se muestra en las siguientes imagenes.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/pregunta16-1.eps}
+\caption{Instalando paquetes 1.}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/pregunta16-2.eps}
+\caption{Instalando paquetes 2.}
+\end{center}
+\end{figure}
+
+
+Ahora para que funciones debemos añadir las siguientes lineas al archivo de conguración "phpmyadmin.conf" como se muesta en la figura siguiente:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/pregunta16-3.eps}
+\caption{Configurando phpmyadmin.conf con nano.}
+\end{center}
+\end{figure}
+
+Ahora de forma similar abrimos el archivo "config.inc.php" dando el valor que se quiera a la variable " cfg['blowfish\_secret']".
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/pregunta16-4.eps}
+\caption{Abrimos el siguiente archivo config.inc.php.}
+\end{center}
+\end{figure}
+
+Por ultimo, podemos comprobar que el servicio funciona:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{Imagenes/pregunta16-5.eps}
+\caption{Comprobamos que phpMyAdmin funciona.}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Configure PHP para poder importar Bds mayores de 8MiB (límite por defecto). Indique cómo ha realizado el proceso y muestre capturas de pantalla.}
+
+Para poder importar BD mayores de 8MB, solo tenemos que cambiar la variable post\_max\_size, contenida en el fichero /etc/php.ini. Sin embargo, según la documentacion de php, la variable upload\_max\_filesize debe tener un valor mayor que esta, con lo cual, deberiamos cambiarla también. Por ultimo, la varibale memory\_limit tambien ha de tener un valor mayor (en nuestro caso ya lo cumple, al tener 128 MB por defecto).
+
+Dejamos post\_max\_size a 80M y upload\_filesize a 100M. 
+
+En primer lugar podemos comprobar el tamaño al pricipio.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/sub16-1.eps}
+\caption{Tamaño de importación al principio.}
+\end{center}
+\end{figure}
+
+Ahora abrimos el archivo de configuración para editarlo.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/sub16-2.eps}
+\caption{Abriendo el archivo de configuración.}
+\end{center}
+\end{figure}
+
+Nos fijamos nos fijamos en las variables : "post\_max\_size" y "upload\_max\_filesize".
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/sub16-3.eps}
+\caption{Variables al principio.}
+\end{center}
+\end{figure}
+
+Y las dejamos como se  muestran en la siguiente figura:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/sub16-4.eps}
+\caption{Archivo de configuración después de modificar las variables.}
+\end{center}
+\end{figure}
+
+La variable "memory\_limit" la dejamos como estaba:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/sub16-5.eps}
+\caption{Variable memory\_limit.}
+\end{center}
+\end{figure}
+
+Ahora tenemos que reiniciar el servicio:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/sub16-6.eps}
+\caption{Reiniciamos el servicio.}
+\end{center}
+\end{figure}
+
+Ahora podemos comprobar que el tamaño a sido alterado:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/sub16-7.eps}
+\caption{Tamaño de importación de base de datos después.}
+\end{center}
+\end{figure}
+%----------------------------------------------------------------------------------------
+
+\section{Viste al menos una de las webs de los software mencionados y pruebe las demos que ofrecen realizando capturas de pantalla y comentando qué está realizando.}
+
+Para la prueba usaré la demo de Cpanel. Para esto nos dirigimos a \url{http://cpanel.net/demo/}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.2]{Imagenes/cpanel1.eps}
+\caption{Página de inicio \url{http://cpanel.net/demo/}.}
+\end{center}
+\end{figure}
+
+
+Se disponen de varias demos pero nosotros usarémos "WEBHOST MANAGER".
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/cpanel2.eps}
+\caption{Usaremos está demo.}
+\end{center}
+\end{figure}
+
+Una vez dentro se nos muestran muchos servicios diferente:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/cpanel3.eps}
+\caption{Conjunto de servicios de la demo seleccionada.}
+\end{center}
+\end{figure}
+
+Vamos a probar la configuración de servicios:
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/cpanel4.eps}
+\caption{Conjunto de servicios a configurar.}
+\end{center}
+\end{figure}
+
+
+Como podemos ver en la imagen anterior, se nos permite cambiar una amplia gama de cosas, como por ejemplo la confiración de Apache, seleccionar y configurar el servidor FTP,...
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.2]{Imagenes/cpanel5.eps}
+\caption{Menu configuración FTP server.}
+\end{center}
+\end{figure}
+
+La imagen anterior muestra las posibles servidores FTP que podemos seleccionar.
+
+También es posible configurar el servidor de correo, como se muestra en la siguiente imagen:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.2]{Imagenes/cpanel6.eps}
+\caption{Configuración del MailServer.}
+\end{center}
+\end{figure}
+
+Donde podemos seleccionar los protocolos que deseamos tener activos, maximo número de conexiones IMAP que se permiten,...
+
+También como curiosidad se permite administrar clusters.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{Imagenes/cpanel7.eps}
+\caption{Administración de cluster de CPanel Demo.}
+\end{center}
+\end{figure}
+
+%----------------------------------------------------------------------------------------
+
+\section{ Ejecute los ejemplos de find, grep y escriba el script que haga uso de sed para cambiar la configuración de ssh y reiniciar el servicio.}
+
+La ejecucion de " ps -Af | grep firefox " muestra por pantalla lo siguiente.
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/firefox.eps}
+\caption{Resutaldo de la ejecucion del comando "ps -Af | grep firefox".}
+\end{center}
+\end{figure}
+
+Para la ejecución del segundo ejemplo es recomendable aplicarla como super usuario, ya que podría denegar el acceso a algún archivo por falta de privilegios y mostrarnos el siguiente mensaje:
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/denegado.eps}
+\caption{Acceso denegado por falta de privilegios.}
+\end{center}
+\end{figure}
+
+Esto lo resolvemos tan haciendonos super usuarios y ahora el resultado es el siguiente:
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/correcta.eps}
+\caption{Resultado correcto de la operacion.}
+\end{center}
+\end{figure}
+
+Ahora todos los documentos estarán copiados en la carpeta PDFs.
+
+
+El comando "sed" nos permite reemplazar cadenas en archivos de una manera sencilla.
+
+El siguiente script obtenido gracias a la información encontrada en internet \footnote{http://www.panticz.de/SSH-server-enable-disable-password-authentication}
+permite desactivar el password de autentificación de SSH.
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/scriptsed.eps}
+\caption{Cambiar configuracion con sed.}
+\end{center}
+\end{figure}
+
+No ha sido sencillo encontrar ejemplos sobre esto. Pero buscando por internet he podido encontrar un articulo "SSH server enable / disable password authentication"  \footnote{//www.panticz.de/SSH-server-enable-disable-password-authentication}. Con está ayuda me ha sido posible generar el script anterior.
+
+%----------------------------------------------------------------------------------------
+
+\section{ Escriba el script para cambiar el acceso a ssh usando PHP o Python.}
+
+Usaremos Python.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/scriptpy.eps}
+\caption{Cambiar configuración con python.}
+\end{center}
+\end{figure}
+
+Este script cambia el modo de autentificación reemplazando una frase.
+
+
+Ayuda de Alberto Quesada, alumno de 3º Grado Ingenieria Informática, para resolver esta cuentión.
+%----------------------------------------------------------------------------------------
+
+\section{Abra una consola de Powershell y pruebe a parar un programa en ejecución (p.ej), realice capturas de pantalla y comente lo que muestra.}
+
+En primer abrimos la consola y comprobamos que procesos se estan ejecutando. En la siguiente imagen, se muestra diferentes ejecuciones del comando " Get-Process ".
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/ejercicio19-2.eps}
+\caption{Ejecución del comando Get-Process.}
+\end{center}
+\end{figure}
+En la primera parte se puede observar como limitamos la busqueda de procesos a partir del nombre, con lo que restringuimos la busqueda de los procesos activos.
+En la segunda ejecución del comando se muestran todos los procesos que se están ejecutando.
+
+Para detener un proceso haremos uso del comando " Stop-Process " que con la ayuda del parámetro -Name restringuimos los procesos a borrar, el parámetro -Confirm  nos sirve para comprobar lo que se va a borrar, antes de detener un proceso nos pedirá la confirmación.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{Imagenes/ejercicio19-3.eps}
+\caption{Borrando procesos.}
+\end{center}
+\end{figure}
+
+En la figura anterior podemos observar que antes de borrar alguno de los dos procesos se nos pide confirmación.
+%------------------------------------------------
+
+\bibliography{citas} %archivo citas.bib que contiene las entradas 
+\bibliographystyle{plain} % hay varias formas de citar
+
+\end{document}

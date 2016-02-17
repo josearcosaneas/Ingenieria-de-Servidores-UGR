@@ -1,0 +1,35 @@
+\select@language {spanish}
+\contentsline {figure}{\numberline {12.1}{\ignorespaces Comprobar que el servicio (IIS) funciona.}}{10}
+\contentsline {figure}{\numberline {14.1}{\ignorespaces A\IeC {\~n}adir repositorio.}}{12}
+\contentsline {figure}{\numberline {14.2}{\ignorespaces Instalamos la aplicaci\IeC {\'o}n con yum.}}{12}
+\contentsline {figure}{\numberline {14.3}{\ignorespaces A\IeC {\~n}adimos excepcion al firewall.}}{13}
+\contentsline {figure}{\numberline {14.4}{\ignorespaces Reiniciar servicio.}}{13}
+\contentsline {figure}{\numberline {14.5}{\ignorespaces Comprobaci\IeC {\'o}n de que funciona el servicio.}}{14}
+\contentsline {figure}{\numberline {14.6}{\ignorespaces Cambiando el idioma del sistema.}}{14}
+\contentsline {figure}{\numberline {14.7}{\ignorespaces Cambiando puerto de escuha SSH.}}{15}
+\contentsline {figure}{\numberline {15.1}{\ignorespaces Instalando paquetes 1.}}{15}
+\contentsline {figure}{\numberline {15.2}{\ignorespaces Instalando paquetes 2.}}{16}
+\contentsline {figure}{\numberline {15.3}{\ignorespaces Configurando phpmyadmin.conf con nano.}}{16}
+\contentsline {figure}{\numberline {15.4}{\ignorespaces Abrimos el siguiente archivo config.inc.php.}}{16}
+\contentsline {figure}{\numberline {15.5}{\ignorespaces Comprobamos que phpMyAdmin funciona.}}{17}
+\contentsline {figure}{\numberline {15.6}{\ignorespaces Tama\IeC {\~n}o de importaci\IeC {\'o}n al principio.}}{17}
+\contentsline {figure}{\numberline {15.7}{\ignorespaces Abriendo el archivo de configuraci\IeC {\'o}n.}}{18}
+\contentsline {figure}{\numberline {15.8}{\ignorespaces Variables al principio.}}{18}
+\contentsline {figure}{\numberline {15.9}{\ignorespaces Archivo de configuraci\IeC {\'o}n despu\IeC {\'e}s de modificar las variables.}}{18}
+\contentsline {figure}{\numberline {15.10}{\ignorespaces Variable memory\_limit.}}{18}
+\contentsline {figure}{\numberline {15.11}{\ignorespaces Reiniciamos el servicio.}}{19}
+\contentsline {figure}{\numberline {15.12}{\ignorespaces Tama\IeC {\~n}o de importaci\IeC {\'o}n de base de datos despu\IeC {\'e}s.}}{19}
+\contentsline {figure}{\numberline {16.1}{\ignorespaces P\IeC {\'a}gina de inicio \unhbox \voidb@x \begingroup \begingroup \let \relax \relax \relax \endgroup \Url {http://cpanel.net/demo/}.}}{19}
+\contentsline {figure}{\numberline {16.2}{\ignorespaces Usaremos est\IeC {\'a} demo.}}{20}
+\contentsline {figure}{\numberline {16.3}{\ignorespaces Conjunto de servicios de la demo seleccionada.}}{20}
+\contentsline {figure}{\numberline {16.4}{\ignorespaces Conjunto de servicios a configurar.}}{21}
+\contentsline {figure}{\numberline {16.5}{\ignorespaces Menu configuraci\IeC {\'o}n FTP server.}}{21}
+\contentsline {figure}{\numberline {16.6}{\ignorespaces Configuraci\IeC {\'o}n del MailServer.}}{22}
+\contentsline {figure}{\numberline {16.7}{\ignorespaces Administraci\IeC {\'o}n de cluster de CPanel Demo.}}{22}
+\contentsline {figure}{\numberline {17.1}{\ignorespaces Resutaldo de la ejecucion del comando "ps -Af | grep firefox".}}{23}
+\contentsline {figure}{\numberline {17.2}{\ignorespaces Acceso denegado por falta de privilegios.}}{23}
+\contentsline {figure}{\numberline {17.3}{\ignorespaces Resultado correcto de la operacion.}}{23}
+\contentsline {figure}{\numberline {17.4}{\ignorespaces Cambiar configuracion con sed.}}{23}
+\contentsline {figure}{\numberline {18.1}{\ignorespaces Cambiar configuraci\IeC {\'o}n con python.}}{24}
+\contentsline {figure}{\numberline {19.1}{\ignorespaces Ejecuci\IeC {\'o}n del comando Get-Process.}}{25}
+\contentsline {figure}{\numberline {19.2}{\ignorespaces Borrando procesos.}}{25}

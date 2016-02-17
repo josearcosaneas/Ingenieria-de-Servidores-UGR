@@ -1,0 +1,58 @@
+\begin{thebibliography}{10}
+
+\bibitem{E5}
+Ubuntu Always.
+\newblock Como usar apt y el resto del sistema por proxy.
+\newblock
+  http://ubuntualways.wordpress.com/2012/12/11/como-usar-apt-get-y-el-resto-de-sistema-por-proxy/.
+
+\bibitem{E8}
+CeeC.
+\newblock Ssh-el dios de la administracion remota.
+
+\bibitem{E11}
+Red Hat Enterprise Linux 4:~Manual de~referencia.
+\newblock Capítulo 20. protocolo ssh.
+\newblock
+  http://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-rg-es-4/s1-ssh-configfiles.html.
+
+\bibitem{E7}
+Comunidad DesarrolloWeb.com.
+\newblock Por qué telnet no es considerado un protocolo seguro.
+\newblock http://www.desarrolloweb.com/faq/telnet-no-considerado-seguro.html.
+
+\bibitem{E1}
+FedoraProject.
+\newblock Uso del comando yum.
+\newblock
+  http://docs.fedoraproject.org/es-ES/Fedora/14/html/Software_Management_Guide/Uso_del_comando_yum.html.
+
+\bibitem{E2}
+FedoraProyect.
+\newblock Usando yum con un servidor proxy.
+\newblock
+  http://docs.fedoraproject.org/es-ES/Fedora_Core/4/html/Software_Management_Guide/sn-yum-proxy-server.html.
+
+\bibitem{E6}
+Guia-Ubuntu.
+\newblock Añadir repositoriso en ubuntu.
+\newblock
+  http://www.guia-ubuntu.com/index.php/A%C3%B1adir_repositorios_externos.
+
+\bibitem{E4}
+Guia-Ubuntu.
+\newblock Comando apt-get en ubuntu.
+\newblock http://www.ubuntu-guia.com/2011/01/comando-apt-get-en-ubuntu.html.
+
+\bibitem{E3}
+Fedora Project.
+\newblock configuracion yum.
+\newblock
+  http://docs.fedoraproject.org/es-ES/Fedora/14/html/Software_Management_Guide/Configuraci%C3%B3n_de_YUM.html.
+
+\bibitem{E9}
+UbuntuForums.
+\newblock Error al inicar aplicaciones graficas mediante ssh con xming en win.
+\newblock http://ubuntuforums.org/archive/index.php/t-1074374.html.
+
+\end{thebibliography}

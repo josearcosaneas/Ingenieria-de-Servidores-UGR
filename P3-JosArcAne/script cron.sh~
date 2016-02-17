@@ -1,0 +1,21 @@
+#!/bin/bash 
+
+
+_hoy=$(date +"%m_%d_%Y") 
+_archivo="/seguridad/$_hoy" 
+mkdir $_archivo
+
+cd /codigo
+
+tar czf * codigo.tar
+
+
+
+cp codigo.tar /seguridad/$_hoy
+
+# chmod 700 copia_seguridad_diaria.sh
+# crontab -e
+ 
+# e incluir dentro
+
+
